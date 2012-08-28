@@ -21,6 +21,7 @@
 
 // Here is an example as how you could store the form data in a MySQL database using PDO
 
+
 /**
  * @abstract This class is a database integration handler example
  * the jquery formbuilder plugin.
@@ -35,6 +36,7 @@ class Formbuilder_pdo extends Formbuilder {
 	private $_db;
 	
 	
+	
 	/**
 	 * Connection statement
 	 * @param type $url
@@ -42,7 +44,19 @@ class Formbuilder_pdo extends Formbuilder {
 	 * @param type $pass
 	 * @return boolean 
 	 */
-	public function connect($url = "mysql:host=127.0.0.1;dbname=formbuilder", $user = "root", $pass = ""){
+	
+	
+	
+	
+	public function connect(){
+		
+		// include db settings
+		require('db_settings.php');
+		
+		$url = "mysql:host=$db_host;dbname=$db_name";
+		$user = $db_user;
+		$pass = $db_pass;
+		
 		try {
 			$this->_db = new PDO($url, $user, $pass);
 			return true;
@@ -57,7 +71,10 @@ class Formbuilder_pdo extends Formbuilder {
 	 * Save the data to the database, but still returns the $for_db array.
 	 */
 	public function save_form(){
-		$for_db = parent::get_encoded_form_array();
+		//$for_db = parent::get_encoded_form_array();
+		
+		$for_db = parent::open311_form();
+		
 		if($for_db['form_id']){
 			$stmt = $this->_db->prepare("UPDATE fb_savedforms SET form_structure = :struct WHERE id = :id");
 			$stmt->bindParam(':id', $for_db['form_id'], PDO::PARAM_INT);
@@ -68,7 +85,7 @@ class Formbuilder_pdo extends Formbuilder {
 		$stmt->execute();
 	}
 	
-	
+		
 	/**
 	 * Overrides the render json method to load the structure from the database
 	 */
@@ -138,7 +155,7 @@ class Formbuilder_pdo extends Formbuilder {
 	 * @param type $form_db_id
 	 * @return boolean 
 	 */
-	protected function loadFormRecord($form_db_id = false){
+	public function loadFormRecord($form_db_id = false){
 		if($form_db_id){
 			$stmt = $this->_db->prepare("SELECT * FROM fb_savedforms WHERE id = :id");
 			$stmt->bindParam(':id', $form_db_id, PDO::PARAM_INT);

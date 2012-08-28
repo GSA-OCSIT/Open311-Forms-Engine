@@ -14,8 +14,9 @@ require('Formbuilder/Formbuilder.php');
 
 $form_data = isset($_POST['frmb']) ? $_POST : false;
 $form = new Formbuilder($form_data);
-$for_db = $form->get_encoded_form_array();
+//$for_db = $form->get_encoded_form_array();
 
+$for_db = $form->open311_form();
 
 //------------------------------------------------------------------------------
 
@@ -23,11 +24,11 @@ $for_db = $form->get_encoded_form_array();
 // information to automatically save everything to the database.
 // You could do that like so:
 
-//require('Formbuilder/Formbuilder_pdo.php');
+require('Formbuilder/Formbuilder_pdo.php');
 //$form_data = isset($_POST['frmb']) ? $_POST : false;
-//$form = new Formbuilder_pdo($form_data);
-//$form->connect();
-//$form->save_form();
+$form = new Formbuilder_pdo($for_db);
+$form->connect();
+$form->save_form();
 
 
 //------------------------------------------------------------------------------
