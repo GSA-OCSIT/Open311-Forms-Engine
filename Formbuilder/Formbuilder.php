@@ -69,19 +69,19 @@ class Formbuilder {
 		
 		$count = 1;
 		foreach ($form_data["form_structure"] as $keys => $attributes) {
-			
+
+			// this should be user provided, just faking it now			
 			$new_attributes['variable'] 			= true;
 			
 			// this should be user provided, just faking it now
 			$code_temp 								= (strlen($attributes['title'])) ? $attributes['title'] : $attributes['values'];
 			$new_attributes['code'] 				= str_replace(' ', '-', strtolower($code_temp));
 			
+			// the order is actually set by the user, but it only comes in as the order of the array, not explicit values. Let's fix that
 			$new_attributes['order'] 				= $count;
 			
-			// these two need to be filtered more
-			$datatype					 			= $attributes['cssClass'];
-			
-			switch ($datatype) {
+			// filter the names of form field types
+			switch ($attributes['cssClass']) {
 				case 'select':
 					if ($attributes['multiple'] == 'checked') {
 						$new_attributes['datatype'] = 'multivaluelist';
@@ -109,16 +109,14 @@ class Formbuilder {
 					break;					
 			}
 			
-			// this should be user provided, just faking it now
+			// this should be user provided, just faking it now and drawing from datatype conventions set above
 			//$new_attributes['datatype_description'] = '';	
 										
 			$new_attributes['required'] 			= ($attributes['required'] == 'checked') ? true : false;					
 			$new_attributes['description'] 			= ($new_attributes['datatype'] == 'text' || $new_attributes['datatype'] == 'string') ? $attributes['values'] : $attributes['title'];
 			
-			// this needs to be restructured
-			$option_values 				= $attributes['values'];
-			
-			$new_attributes['values'] = null;					
+			$option_values 							= $attributes['values'];			
+			$new_attributes['values'] 				= null;					
 			
 			
 			if ($new_attributes['datatype'] !== 'text' && $new_attributes['datatype'] !== 'string') {
@@ -129,12 +127,10 @@ class Formbuilder {
 					$key = str_replace(' ', '-', strtolower($option['value']));
 				
 					$new_attributes['values'][] = array('key' => $key, 'name' => $option['value']);
-				
-				
+					
 				}		
 			}
-					
-			//$new_attributes['values']
+				
 					
 			$new_structure[$keys] = $new_attributes;
 			
