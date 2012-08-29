@@ -14,9 +14,9 @@ require('Formbuilder/Formbuilder.php');
 
 $form_data = isset($_POST['frmb']) ? $_POST : false;
 $form = new Formbuilder($form_data);
-//$for_db = $form->get_encoded_form_array();
+$for_db = $form->get_encoded_form_array();
 
-$for_db = $form->open311_form();
+$for_db_raw = $form->open311_form();
 
 //------------------------------------------------------------------------------
 
@@ -29,13 +29,13 @@ require('Formbuilder/Formbuilder_pdo.php');
 $form = new Formbuilder_pdo($for_db);
 $form->connect();
 $form->save_form();
-
+//$form->save_form_open311();
 
 //------------------------------------------------------------------------------
 
 // Here's the example output of get_encoded_form_array()
 
-print_r($for_db);
+print_r($for_db_raw);
 //Array
 //(
 //    [form_id] => 1
