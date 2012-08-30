@@ -19,6 +19,7 @@ Please let us know how you're using this product!
 
 
 Version 0.4 - 20111215
+
 - Removing old XML-based form loading system, moving to pure JSON
 - Removing internal serialization system in favor of json formatting
 - Adding example mysql storage methods to the load, save process (PDO-based so other databases may be used)
@@ -28,10 +29,12 @@ Version 0.4 - 20111215
 - Added sample response saves to db, only on good validation
 
 Version 0.3.1 - 20110722
+
 - Corrected issue with reserved words breaking support for Safari, Opera, IE
 - Corrected issue with example-save expecting old POST key
 
 Version 0.3 - 20110619
+
 - Compatible with latest jQuery, jQueryUI and jquery.scrollTo
 - CSS moved into a separate file
 - Applied jsbeautifier and jshint on code
@@ -43,6 +46,7 @@ Version 0.3 - 20110619
 - Example html switched to latest html doctype
 
 Version 0.2 - 20100806
+
 - Upgraded to scroll.to 1.4.2
 - Added ability to sort form fields.
 - Added in basic build scripts for easier releases
@@ -50,5 +54,6 @@ Version 0.2 - 20100806
 - Hash bug fix
 
 Version 0.1 - 20090922
+
 - Complete initial release using much of the functionality copied
 from AspenMSM, an excellent cms tool from Trellis Development.
