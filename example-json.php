@@ -6,10 +6,22 @@ require('Formbuilder/Formbuilder.php');
 // form_structure and hash from our database. This is
 // how the form data would have been saved using
 // the $form->get_encoded_form_array() method.
+
+$get_form_id = $_REQUEST['form_id'];
+$schema = $_REQUEST['schema'];
+
 include('fake-form-db-vals.php');
 
 $form = new Formbuilder($fake_db_vals);
-$form->render_json();
+
+if ($schema == 'open311') {
+	
+	$form->render_open311_service_definition();
+	
+} else {
+	$form->render_json();	
+}
+
 
 // OR, if you're using the database extension class you can load a form
 // by passing in the record id:

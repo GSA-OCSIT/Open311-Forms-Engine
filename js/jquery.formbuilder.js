@@ -48,7 +48,7 @@
 			// load existing form data
 			if (opts.load_url) {
 				$.getJSON(opts.load_url, function(json) {
-					form_db_id = json.form_id;
+					form_db_id = json.id;
 					fromJson(json.form_structure);
 				});
 			}

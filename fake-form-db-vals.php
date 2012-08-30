@@ -9,6 +9,6 @@ require('Formbuilder/Formbuilder_pdo.php');
 
 $form = new Formbuilder_pdo();
 $form->connect();
-$fake_db_vals = $form->loadFormRecord('49');
+$fake_db_vals = $form->loadFormRecord($get_form_id);
 
 ?>

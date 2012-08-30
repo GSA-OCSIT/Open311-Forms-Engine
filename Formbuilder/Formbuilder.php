@@ -140,7 +140,9 @@ class Formbuilder {
 		$form_data["form_structure"] = $new_structure;
 		
 		//return $form_data;
-		return array('form_id'=>$this->_form_array['form_id'],'form_structure'=>json_encode($form_data['form_structure']));
+		$form_id = ($this->_form_array['form_id']) ? $this->_form_array['form_id'] : $this->_form_array['id'];
+		
+		return array('form_id'=>$form_id,'form_structure'=>json_encode($form_data['form_structure']));
 		
 	}
 
@@ -152,6 +154,23 @@ class Formbuilder {
 	 */
 	public function get_encoded_form_array(){
 		return array('form_id'=>$this->_form_array['form_id'],'form_structure'=>json_encode($this->_form_array['form_structure']));
+	}
+
+	/**
+	 * Prints out the generated json file using Open311 schema with a content-type of application/json
+	 *
+	 * @access public
+	 * @return array
+	 */
+	public function render_open311_service_definition(){
+		$form_data = $this->open311_form();
+		
+		$service_definition['service_code'] = $form_data['form_id'];
+		$service_definition['attributes'] = json_decode($form_data['form_structure']);
+		
+		header("Content-Type: application/json");
+		print json_encode($service_definition);
+		
 	}
 
 

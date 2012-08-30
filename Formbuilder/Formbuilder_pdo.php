@@ -77,7 +77,7 @@ class Formbuilder_pdo extends Formbuilder {
 		$for_db['form_structure_open311'] = $for_db_open311['form_structure'];
 		
 		if($for_db['form_id']){
-			$stmt = $this->_db->prepare("UPDATE fb_savedforms SET form_structure = :struct WHERE id = :id");
+			$stmt = $this->_db->prepare("UPDATE fb_savedforms SET form_structure = :struct, form_structure_open311 = :struct311 WHERE id = :id");
 			$stmt->bindParam(':id', $for_db['form_id'], PDO::PARAM_INT);
 		} else {
 			$stmt = $this->_db->prepare("INSERT INTO fb_savedforms (form_structure, form_structure_open311) VALUES (:struct, :struct311)");
@@ -176,5 +176,26 @@ class Formbuilder_pdo extends Formbuilder {
 		}
 		return false;
 	}
+	
+	
+	/**
+	 * Query the database for forms
+	 * @param type $form_db_id
+	 * @return boolean 
+	 */
+	public function loadForms(){
+			$stmt = $this->_db->prepare("SELECT id FROM fb_savedforms");
+			$stmt->execute();
+			if($stmt->rowCount()){
+				
+				$forms = $stmt->fetchAll();
+				return $forms;
+				exit;
+			} else {
+				return false;				
+			}			
+	}	
+	
+	
 }
 ?>
